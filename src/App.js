@@ -24,8 +24,10 @@ export default function App() {
   const [xAxisLabels, setXAxisLabels] = useState([]);
   const [yAxisLabels, setYAxisLabels] = useState([]);
 
+
   console.log(xAxisLabels, yAxisLabels)
 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,20 +55,21 @@ export default function App() {
         const yAxisLabelsData = dataY.slice(0, 50).map(item => item.Label);
         const yAxisData = dataY.slice(0, 50).map(item => parseFloat(item.RandomNumber));
 
-        setChartData({
+        setChartData(prevChartData => ({
+          ...prevChartData,
           labels: xAxisLabelsData,
           datasets: [
             {
-              ...chartData.datasets[0],
+              ...prevChartData.datasets[0],
               data: XAxisData
             },
             {
-              ...chartData.datasets[1],
+              ...prevChartData.datasets[1],
               label: "Y-axis Data",
               data: yAxisData
             }
           ]
-        });
+        }));
 
         setXAxisLabels(xAxisLabelsData);
         setYAxisLabels(yAxisLabelsData);
